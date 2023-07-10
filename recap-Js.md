@@ -18,6 +18,13 @@ const fruits = ["cerise", "banane", "kiwi"];
 fruits[0]; // => accède à "cerise"
 ```
 
+**Recupération du premier objet d'un tableau**
+```js
+const nomRecherché = FichierSource.find((UnObjetDansSource) => {
+    return req.params.URL === UnObjetDansSource.name.toLowerCase();
+  });
+  
+```
 **Objets**
 
 ```js
