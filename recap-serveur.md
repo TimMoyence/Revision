@@ -38,9 +38,12 @@ L'installation de ejs
   - npm install ejs
 
 Mise en place de la récupération des view 
-  - app.set("view engine", "ejs");
-  - app.set("views", "views");
-
+```js 
+//Pour le premier, on précise ici que le dossier qui contient les vues (les views) sera le dossier ./views (il faut que ce dossier existe).
+  app.set("view engine", "ejs");
+//Pour second on lui précise le nom du moteur que nous allons utiliser, il sera capable d’aller chercher le module EJS tout seul.
+  app.set("views", "views");
+```
 la récuparation du html 
   - res.render dans le app.get
     ```js
@@ -80,7 +83,7 @@ ex : ```html
   - après le view engine : 
     ```js 
     // Tous le contenu du dossier public pourra etre servi si une requete le demande
-    app.us(express.static('public')); 
+    app.use(express.static('public')); 
     ```
   - Conditions : l'avoir intégré dans le link du header avant et l'avoir mis dans le partials donc dans tous les documents
   
