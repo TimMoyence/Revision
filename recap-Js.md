@@ -1,4 +1,4 @@
-**indexOf()**
+## indexOf()
 
 ```js
 //    Permet de récupérer le premier index d’un élément dans une chaîne de caractères
@@ -8,7 +8,7 @@ const fruits = ["banane", "clémentine", "orange"];
 fruits.indexOf("orange"); // => 2 (index 2 du tableau fruits, ie. 3ème élément)
 ```
 
-**Array**
+## Array
 
 ```js
 // déclarer un tableau :
@@ -18,14 +18,14 @@ const fruits = ["cerise", "banane", "kiwi"];
 fruits[0]; // => accède à "cerise"
 ```
 
-**Recupération du premier objet d'un tableau**
+## Recupération du premier objet d'un tableau
 ```js
 const nomRecherché = FichierSource.find((UnObjetDansSource) => {
     return req.params.URL === UnObjetDansSource.name.toLowerCase();
   });
   
 ```
-**Objets**
+## Objets
 
 ```js
 // déclarer un objet :
@@ -41,7 +41,7 @@ fruits["acide"]; // retourne "kiwi"
 fruits.acide;
 ```
 
-**function**
+## function
 
 ```js
 // Code fonctionnel
@@ -53,16 +53,16 @@ const result = sum(41, 1);
 console.log("La réponse de l'univers est :" + result); // affiche "Le résultat est : 42"
 ```
 
-**Boucles**
+## Boucles
 
 ```js
-**For**
+-- For --
 
     for(let i = 0; i < 3; i++) {
     // ... instructions
     }
 
-**For..in**
+-- For..in -- 
     const fruit = {
         nom: 'fraise',
         couleur: 'rouge'
@@ -80,7 +80,7 @@ console.log("La réponse de l'univers est :" + result); // affiche "Le résultat
     // Propriété couleur :
     // Le fruit est rouge
 
-**For..of**
+-- For..of -- 
     const winners = [
         {name: 'Christian Taylor', distance: 17.86},
         {name: 'Will Claye', distance: 17.76},
@@ -102,7 +102,7 @@ console.log("La réponse de l'univers est :" + result); // affiche "Le résultat
 
     // ! NB : la boucle for...of ne fonctionne pas avec les objets.
 
-**forEach**
+-- forEach -- 
     // forEach est une méthode des Arrau qui permet d'exécuter le même traitement sur chacun des éléments d'un tableau
     // Le traitement à exécuter est défini par une fonction
     starElements.forEach(function (starElement){
@@ -116,7 +116,7 @@ console.log("La réponse de l'univers est :" + result); // affiche "Le résultat
 
 ```
 
-**If..else**
+## If..else 
 
 ```js
 function testNum(a) {
@@ -129,7 +129,7 @@ function testNum(a) {
 }
 ```
 
-**Récupérer un élément HTML**
+## Récupérer un élément HTML
 
 ```js
 let elementChapeau = document.getElementById("chapeau");
@@ -143,7 +143,7 @@ let introduction = elements[0]; // <p.introduction>
 let chapeau = elements[1]; // <div#chapeau>
 ```
 
-**Modifier un élément du DOM**
+## Modifier un élément du DOM
 
 ```js
 //Ajouter du contenu texte
@@ -152,7 +152,7 @@ element.textContent = "Hello!";
 element.innerHTML = "<strong>Hello!</strong>";
 ```
 
-**Modifier les attributs d’un élément**
+## Modifier les attributs d’un élément 
 
 ```js
 // Récupérer l'élément...
@@ -164,7 +164,7 @@ element.href = "https://oclock.io";
 element.className = "navigation-link";
 ```
 
-**Créer un élément + ajouter au DOM**
+## Créer un élément + ajouter au DOM 
 
 ```js
 // Création
@@ -175,7 +175,7 @@ let list = document.querySelector("ul");
 list.appendChild(item);
 ```
 
-**Event**
+## Event 
 
 ```js
     // event : 'click', 'submit', 'keyup', 'DOMContentLoaded'...
@@ -210,7 +210,7 @@ list.appendChild(item);
         },
 ```
 
-**Event Formulaire - prevent default**
+## Event Formulaire - prevent default
 
 ```js
     TakeForm() {
@@ -221,7 +221,7 @@ list.appendChild(item);
     }
 ```
 
-**toggle**
+## toggle
 
 ```js
 let nom = document.querySelector("Ou il y aura le click");
@@ -232,7 +232,7 @@ nom.addEventListener("click", function (event) {
 });
 ```
 
-**Rangement dans un objet**
+## Rangement dans un objet
 
 ```js
     // tout mettre dans une constante
@@ -255,7 +255,7 @@ nom.addEventListener("click", function (event) {
 };
 ```
 
-**Recuperation fin d'un email pour comparatif a un 'ForbiddenDomains'**
+## Recuperation fin d'un email pour comparatif a un 'ForbiddenDomains'
 
 ```js
  handleEmailInput() {
@@ -272,7 +272,7 @@ nom.addEventListener("click", function (event) {
     },
 ```
 
-**backticks ``**
+## backticks ``
 
 ```js
 const character = {
