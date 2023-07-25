@@ -178,6 +178,3 @@ const dataMapper = {
   },
 };
 ```
-
-
-salut
