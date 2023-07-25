@@ -1,0 +1,1 @@
+Un script SQL = une liste d'inscrutions SQL, séparées par des `;`
