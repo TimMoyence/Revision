@@ -48,7 +48,7 @@ PGPORT = 5432;
 ## Gestion des cookies : Installation express-session et gestion
 
 ```js
-`npm install express ejs dotenv express-session`;
+`npm install express-session`;
 // a mettre avec les autres require
 const session = require("express-session");
 
