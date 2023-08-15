@@ -53,7 +53,7 @@ function getConnexion() {
                 createdAt: 'created_at',
                 updatedAt: 'updated_at',
             },
-            // On décide si sequelize va logger ou non les requêtes
+            // On décide si sequelize va logger ou non les requêtes (si on ne veut pas c'est false)
             logging: console.log,
         }
     );
@@ -169,7 +169,7 @@ const questionsController = {
     async index (_,res) {
         try {
         // Appel toutes les questions et les rend dans la constantes questions    
-          const questions = await Questions.findAll();
+        const questions = await Questions.findAll();
         // Appel la questions avecl'ID 3 et ne rend que la description et id   
         const questionIdThree = await Questions.findByPk(3, {attributes : ['description', 'id']})
         
@@ -184,6 +184,15 @@ const questionsController = {
           console.log(error.stack);
           throw error;
         }
+    
+    const quiz = await Quiz.findOne({
+            where: { id: id },
+            include: [
+                { association: 'author' },
+                { association: 'questions', include: ['level', 'answers'] },
+                { association: 'tags' },
+            ],
+        });
     },
 };
 
@@ -210,4 +219,96 @@ module.exports = questionsController;
 </ul>    
 
 <%- include('partials/foot') %>
+```
+
+## Middleware gestion d'erreur 
+
+- Création d'un docs nomé middleware
+- Création de trois middleware pour gerer les erreur et renvoyer un message
+
+```Js
+const { catchErrors } = require('../../middlewares/errorHandlers.js');
+
+router.get('/', catchErrors(mainController.index)); 
+```  
+
+```JS
+// Middleware de l'erreur 404 (page non trouvé)
+// * Il faut appeler le middleware dans index après avoir fait app.use du router
+exports.notFound = (req, res, next) => {
+    const error = new Error('Not found');
+
+    error.status = 404;
+
+    next(error);
+};
+
+// Ce middleware s'appel quand dans le router
+// on fait une fonction qui prend une promesse en paramètre et qui exécute un middleware qui appelle la promesse (fn) qui renvoie le résultat de celle-ci ou qui attrape l'erreur pour passer au prochain middleWare .
+exports.catchErrors = (fn) => {
+    return (req, res, next) => {
+        return fn(req, res, next).catch(next);
+    };
+};
+
+// On créée un middleware d'erreurs avec 4 paramètres donc le premier est l'erreur,  dans ce middleware on créée une constante qui va récupérer le code http et renvoyer un fichier 'erreur' avec un message d'erreur.
+// * le premier argument est une instance de Error
+// * Il faut appeler le middleware dans index après avoir fait app.use du router
+exports.showErrors = (err, req, res, next) => {
+    const statusCode = err.status || 500;
+    res.status(statusCode).render('error', { error: err.message });
+};
+```
+
+## Middleware de gestion de la connection pour acceder a une page 
+
+```Js
+// Ce middlewaer sera ensuite appelé par app.use dans le router de la page concerné. Et permet de valider par la session si un user est présent ou non. 
+const isUserConnectedMiddleware = (req, res, next) => {
+    // a-t-on un user ?
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+
+    next();
+};
+
+module.exports = isUserConnectedMiddleware;
+
+```
+
+## Middleware de gestion d'un user  
+
+```Js
+// Ce middlewaer sera ensuite appelé par app.use dans le router de la page concerné juste après session. Et permet de faire un menu responsive en fonction de si (!locals.user) vaux true ou non. 
+const userMiddleware = (req, res, next) => {
+    res.locals.user = false;
+    if (req.session.user) {
+        res.locals.user = req.session.user;
+    }
+
+    next();
+};
+
+module.exports = userMiddleware;
+```
+
+## Middleware d'accès a un page uniquement si l'on a un role défini dans le user
+
+```Js
+const adminMiddleware = (req, res, next) => {
+  // a-t-on un user ?
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  if (req.session.user.role === 'admin') {
+    return next();
+  } 
+  const error = new Error ('Accès refusé');
+  error.status = 401;
+
+  next(error);
+};
+
+module.exports = adminMiddleware;
 ```
