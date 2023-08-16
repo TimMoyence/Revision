@@ -27,7 +27,7 @@ Donc le doc création d'un dossier :
 - controllers
 - database (pour connection avec la base de données)
 - models
-- vieux 
+- views 
 - Fichier router
   
 ## database => connection.js
@@ -201,7 +201,7 @@ module.exports = questionsController;
 
 # 4 - Views 
 
-``` EJS 
+``` HTML 
 <%- include('partials/head') %>
 
 <h1>Oquiz Questions</h1>
@@ -221,9 +221,11 @@ module.exports = questionsController;
 <%- include('partials/foot') %>
 ```
 
+# Les Middlewares
+
 ## Middleware gestion d'erreur 
 
-- Création d'un docs nomé middleware
+- Création d'un docs nommé middleware
 - Création de trois middleware pour gerer les erreur et renvoyer un message
 
 ```Js
@@ -243,7 +245,7 @@ exports.notFound = (req, res, next) => {
     next(error);
 };
 
-// Ce middleware s'appel quand dans le router
+// Ce middleware s'appel dans le router
 // on fait une fonction qui prend une promesse en paramètre et qui exécute un middleware qui appelle la promesse (fn) qui renvoie le résultat de celle-ci ou qui attrape l'erreur pour passer au prochain middleWare .
 exports.catchErrors = (fn) => {
     return (req, res, next) => {
@@ -251,7 +253,7 @@ exports.catchErrors = (fn) => {
     };
 };
 
-// On créée un middleware d'erreurs avec 4 paramètres donc le premier est l'erreur,  dans ce middleware on créée une constante qui va récupérer le code http et renvoyer un fichier 'erreur' avec un message d'erreur.
+// On créée un middleware d'erreurs avec 4 paramètres dont le premier est l'erreur,  dans ce middleware on créée une constante qui va récupérer le code http et renvoyer un fichier 'erreur' avec un message d'erreur.
 // * le premier argument est une instance de Error
 // * Il faut appeler le middleware dans index après avoir fait app.use du router
 exports.showErrors = (err, req, res, next) => {
