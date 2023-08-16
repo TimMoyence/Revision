@@ -314,3 +314,73 @@ const adminMiddleware = (req, res, next) => {
 
 module.exports = adminMiddleware;
 ```
+
+# Les mots de passes avec bcrypt
+
+```Js
+    // On require brcypt qui sert a encrypter les mdp
+    const bcrypt = require('bcrypt');
+    // On require emailValidator qui est integré dans pg ? ou Sequelize ? 
+    const emailValidator = require('email-validator');
+    // vu que l'on fait simplement de l'envoie de donnée on a pas besoin d'avoir les associations
+    const { User } = require('../models');
+
+    const sessionController = {
+        async loginAction(req, res) {
+            // * Va chercher dans le post l'email et la password rentré dans la page login (necessite un post dans le router)
+            const { email, password } = req.body;
+
+            // Permet de valider l'email avec email Validator de manière explicite
+            if (!emailValidator.validate(email)) {
+                return res.render('login', {
+                    error: 'Votre email est invalide',
+                });
+            }
+
+            // Permet de valider si l'email existe dans la BDD
+            const user = await User.findOne({
+                where: { email: email },
+            });
+
+            // Si l'user n'est pas bon alors on renvois un message générique 
+            if (!user) {
+                return res.render('login', {
+                    error: 'Un message générique',
+                });
+            }
+
+            // ! Vérification du mot de passe
+            let ok = false;
+            if (user) {
+                // * bcrypt récupère le salt du mot de passe user.password
+                // * il ajoute ce salt au nouveau mot de passe et il chiffre tout ça
+                // * Il compare les deux strings et il détermine selon un degré d'acceptabilité si les mots de passes correspondent.
+                ok = await bcrypt.compare(password, user.password);
+            }
+
+            // Si user existe et que password est ok : on fait une session
+            if (ok) {
+                // on efface le password sur l'instance de User
+                delete user.dataValues.password;
+                req.session.user = user;
+                return res.redirect('/');
+            }
+
+            // ! Si pas ok
+            return res.render('/login', {
+                error: "Un truc horrible s'est produit",
+            });
+        },
+
+        logout(req, res) {
+            req.session.user = false;
+            // delete req.session.user;
+            req.session.destroy();
+
+            res.redirect('/');
+        },
+    };
+
+module.exports = sessionController;
+
+```
