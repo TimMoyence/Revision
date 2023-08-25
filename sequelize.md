@@ -159,7 +159,7 @@ Question.belongsTo(Quiz, {
 module.exports = { Answer, Level, Question };
 ```
 
-# 3 - Controllers : exemple d'un controller 
+# 3 - Controllers : exemple d'un controller et fonction d'association
 
 ```JS 
 const {Questions} = require("../models");
@@ -198,6 +198,34 @@ const questionsController = {
 
 module.exports = questionsController;
 ```
+
+**Possibilité d'associer une fonction a une association de deux ou plsuierus models :**
+
+    Foo.hasMany(Bar)
+
+Créer un tableau et le renvoie
+- fooInstance.getBars()
+
+Compte le nombre de nom a l'interieur du models
+- fooInstance.countBars()
+
+Renvoie true ou false en fonction de si la valeur passé en paramètre est a l'interieur ou non
+- fooInstance.hasBar()
+- fooInstance.hasBars()
+
+
+- fooInstance.setBars()
+
+Rajoute a l'instance foo une association indiqué en paramètre et qui est une des valeurs de bar
+- fooInstance.addBar()
+- fooInstance.addBars()
+
+L'enlève
+- fooInstance.removeBar()
+- fooInstance.removeBars()
+
+Créer une nouvelle valeur dans Bar et l'associe a foo 
+- fooInstance.createBar()
 
 # 4 - Views 
 
