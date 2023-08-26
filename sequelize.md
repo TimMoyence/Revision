@@ -2,7 +2,9 @@
 
 ```JS
 // * String de connexion pour première version de fonction de connexion à sequelize
-PG_URL=postgres://oquiz:oquiz@localhost/oquiz
+PG_URL=postgres://VOTREUSERNAME:password@localhost/databaseName
+
+// OU
 
 DB_NAME=oquiz
 DB_USERNAME=oquiz
@@ -60,6 +62,23 @@ function getConnexion() {
 }
 
 module.exports = getConnexion;
+
+
+// ------------------- 
+// OU 
+// -------------------
+
+const { Sequelize } = require('sequelize');
+
+const client = new Sequelize(process.env.PG_URL, {
+    define: {
+        underscored: true,
+        updatedAt: 'updated_at'
+    }
+})
+
+module.exports = client;
+
 ```
 
 ## Methodo : 
@@ -235,7 +254,8 @@ Créer une nouvelle valeur dans Bar et l'associe a foo
 <h1>Oquiz Questions</h1>
 
 <ul>
-<% if (locals.questionWithLevels && locals.questionWithLevels.length) { %>
+    <!-- ici le point d'interogation sert a ne pas avoir d'erreur si on a rien enb retour de la db, il se mets toujours avant le point -->
+<% if (locals?.questionWithLevels && locals?.questionWithLevels?.length) { %>
         <% questionWithLevels.forEach(questionWithLevel => { %>
 
         <!-- Attention a bien mettre plein de . pour acceder au object dans l'object -->

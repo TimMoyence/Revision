@@ -7,7 +7,7 @@ Un API permet de faire appel au back sans avoir de connection avec le front et d
 Dans le router on appelle la route et le controller : 
 `router.get('/lists', listController.getLists)`
 
-Dans le controller on appelle un une fonction asynchrone : 
+Dans le controller on appelle une fonction asynchrone : 
 
 ```JS
 async getLists(req, res) {
@@ -39,3 +39,5 @@ async getLists(req, res) {
         }
     },
 ```
+
+## Foir pour fetch et comment a fonctionn https://developer.mozilla.org/fr/docs/Web/API/Fetch_API/Using_Fetch

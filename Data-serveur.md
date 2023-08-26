@@ -43,6 +43,11 @@ PGHOST = localhost;
 PGPASSWORD = trombi_admin;
 PGDATABASE = trombi;
 PGPORT = 5432;
+
+// OU
+
+PG_URL=postgres://VOTREUSERNAME:password@localhost/databaseName
+
 ```
 
 ## Gestion des cookies : Installation express-session et gestion
@@ -111,11 +116,33 @@ module.exports = promoController;
 
 ```js
 // FICHIER RESPONSABLE DE LA CONNEXION A LA BDD
-const { Client } = require("pg");
 
+// on commence par require et configurer le module 'pg' qui permet de se connecter à notre bdd
+const { Client } = require('pg');
+
+// on crée le client (qui récupère les infos de connexion dans les variables d'env)
+// il faut avoir bien require dotenv tout en haut du fichier d'index pour qe les variables du fichier .env soient ajoutées à process.env (pour que pg les trouvent)
 const client = new Client();
 
+// on connecte ce client
 client.connect();
+// on est connectée à la db !
+
+// on exporte notre client connecté
+module.exports = client;
+
+// --------------------------
+// OU avec Sequelize / dotenv et pg
+// --------------------------
+
+const { Sequelize } = require("sequelize");
+
+const client = new Sequelize(process.env.PG_URL, {
+  define: {
+    underscored: true,
+    updatedAt: "updated_at",
+  },
+});
 
 module.exports = client;
 ```
@@ -137,7 +164,7 @@ const dataMapper = {
     if (result.rows.length === 0) {
       return null;
     }
-    // result.rows est un tablea
+    // result.rows est un tableau
     // donc on peut affiner encore notre objet promo et accéder au premier (et unique) élément du tableau grâce à la notation [0]
     return result.rows[0];
   },
