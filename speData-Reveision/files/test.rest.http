@@ -1,0 +1,26 @@
+# To créate the send for rest we need to create files : 
+
+# test.http
+
+# And fill like this : 
+
+### réponse 404
+GET http://localhost:4000/
+
+### Get Cadex
+GET http://localhost:4000/cadex
+
+
+### Get Personalized Cadex
+GET http://localhost:4000/cadex?name=Geoffrey
+
+### Get Personalized Cadex with error 400
+GET http://localhost:4000/cadex?name=G
+
+### Post Cadex
+POST http://localhost:4000/cadex
+Content-Type: application/json
+
+{
+  "name": "Geoffrey"
+}
